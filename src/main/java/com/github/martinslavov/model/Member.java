@@ -30,6 +30,10 @@ public class Member {
         this(-1, firstName, lastName, phone, email, startDate, expireDate, status);
     }
 
+    public Member(String firstName, String lastName, String phone, String email, LocalDate expireDate) {
+        this(-1, firstName, lastName, phone, email, LocalDate.now(), expireDate, MemberStatus.ACTIVE);
+    }
+
     public int getMemberId() {
         return memberId;
     }
