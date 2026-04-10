@@ -39,6 +39,23 @@ public class BookDAO {
         }
     }
 
+    public List<Book> findAll() {
+
+        String sql = "SELECT * FROM books";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement psFindAll = conn.prepareStatement(sql)
+        ) {
+            ResultSet rs = psFindAll.executeQuery();
+            List<Book> allBooks = new ArrayList<>();
+            while (rs.next()) {
+                allBooks.add(mapResultSetToBook(rs));
+            }
+            return allBooks;
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to retrieve all books", e);
+        }
+    }
+
     public Optional<Book> findById(int id) {
 
         String sql = "SELECT * FROM books WHERE book_id = ?";
@@ -57,20 +74,20 @@ public class BookDAO {
         }
     }
 
-    public List<Book> findAll() {
+    public Optional<Book> findByIsbn(String isbn) {
 
-        String sql = "SELECT * FROM books";
+        String sql = "SELECT * FROM books WHERE ISBN = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement psFindAll = conn.prepareStatement(sql)
+             PreparedStatement psFindByIsbn = conn.prepareStatement(sql)
         ) {
-            ResultSet rs = psFindAll.executeQuery();
-            List<Book> allBooks = new ArrayList<>();
-            while (rs.next()) {
-                allBooks.add(mapResultSetToBook(rs));
+            psFindByIsbn.setString(1, isbn);
+            ResultSet rs = psFindByIsbn.executeQuery();
+            if (rs.next()) {
+                return Optional.of(mapResultSetToBook(rs));
             }
-            return allBooks;
+            return Optional.empty();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to retrieve all books", e);
+            throw new DatabaseException("Failed to find book by ISBN", e);
         }
     }
 

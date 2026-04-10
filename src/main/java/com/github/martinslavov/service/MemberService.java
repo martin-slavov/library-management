@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class MemberService {
 
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-z0-9+_.-]+@[a-z0-9.-]+\\.[a-z]{2,}$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+?[0-9\\s-]{7,14}$");
 
     private final MemberDAO memberDAO;
@@ -34,8 +34,12 @@ public class MemberService {
             throw new LibraryException("Invalid email format");
         }
 
-        if (member.getPhone() != null && !PHONE_PATTERN.matcher(member.getPhone().replaceAll("[\\s-]", "")).matches()) {
-            throw new LibraryException("Invalid phone format");
+        if (member.getPhone() != null) {
+            String cleanPhone = member.getPhone().replaceAll("[\\s-]", "");
+            member.setPhone(cleanPhone);
+            if (!PHONE_PATTERN.matcher(member.getPhone().replaceAll("[\\s-]", "")).matches()) {
+                throw new LibraryException("Invalid phone format");
+            }
         }
 
         if (member.getExpireDate().isBefore(member.getStartDate())) {
@@ -93,7 +97,7 @@ public class MemberService {
 
     private void validateMemberExists(Member member) {
         if (memberDAO.findById(member.getMemberId()).isEmpty()) {
-            throw new LibraryException("Member does not exist");
+            throw new LibraryException("Member not found");
         }
     }
 
