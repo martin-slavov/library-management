@@ -1,6 +1,7 @@
 package com.github.martinslavov.dao;
 
 import com.github.martinslavov.config.DatabaseConnection;
+import com.github.martinslavov.exception.DatabaseException;
 import com.github.martinslavov.model.Book;
 
 import java.sql.*;
@@ -34,7 +35,7 @@ public class BookDAO {
             return Optional.of(book);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to save book", e);
         }
     }
 
@@ -52,7 +53,7 @@ public class BookDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find book by ID", e);
         }
     }
 
@@ -69,7 +70,7 @@ public class BookDAO {
             }
             return allBooks;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to retrieve all books", e);
         }
     }
 
@@ -87,7 +88,7 @@ public class BookDAO {
             }
             return bookByTitle;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find book by title", e);
         }
     }
 
@@ -105,7 +106,7 @@ public class BookDAO {
             }
             return bookByAuthorId;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find book by author ID", e);
         }
     }
 
@@ -129,7 +130,7 @@ public class BookDAO {
 
             return psUpdateBook.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update book", e);
         }
     }
 
@@ -142,7 +143,7 @@ public class BookDAO {
             psDeleteBook.setInt(1, id);
             return psDeleteBook.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to delete book", e);
         }
     }
 
@@ -157,7 +158,7 @@ public class BookDAO {
 
             return psUpdateBook.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update available copies", e);
         }
     }
 

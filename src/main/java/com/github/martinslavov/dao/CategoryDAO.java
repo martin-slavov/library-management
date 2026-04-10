@@ -1,6 +1,7 @@
 package com.github.martinslavov.dao;
 
 import com.github.martinslavov.config.DatabaseConnection;
+import com.github.martinslavov.exception.DatabaseException;
 import com.github.martinslavov.model.Category;
 
 import java.sql.*;
@@ -28,7 +29,7 @@ public class CategoryDAO {
 
             return Optional.of(category);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to save category", e);
         }
     }
 
@@ -45,7 +46,7 @@ public class CategoryDAO {
             }
             return allCategories;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to retrieve all categories", e);
         }
     }
 
@@ -63,7 +64,7 @@ public class CategoryDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find categories by ID", e);
         }
     }
 
@@ -81,7 +82,7 @@ public class CategoryDAO {
             }
             return categoriesByName;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find categories by name", e);
         }
     }
 
@@ -97,7 +98,7 @@ public class CategoryDAO {
 
             return psUpdateCategory.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update categories", e);
         }
     }
 
@@ -110,7 +111,7 @@ public class CategoryDAO {
             psDeleteCategory.setInt(1, id);
             return psDeleteCategory.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to delete categories", e);
         }
     }
 

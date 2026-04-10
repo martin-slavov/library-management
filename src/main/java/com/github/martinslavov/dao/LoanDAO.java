@@ -1,6 +1,7 @@
 package com.github.martinslavov.dao;
 
 import com.github.martinslavov.config.DatabaseConnection;
+import com.github.martinslavov.exception.DatabaseException;
 import com.github.martinslavov.model.Loan;
 import com.github.martinslavov.model.enums.LoanStatus;
 
@@ -37,7 +38,7 @@ public class LoanDAO {
             }
             return Optional.of(loan);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to save loan", e);
         }
     }
 
@@ -54,7 +55,7 @@ public class LoanDAO {
             }
             return allLoans;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to retrieve all loans", e);
         }
     }
 
@@ -72,7 +73,7 @@ public class LoanDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find loan by ID", e);
         }
     }
 
@@ -90,7 +91,7 @@ public class LoanDAO {
             }
             return loanByBookId;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find loan by book ID", e);
         }
     }
 
@@ -108,7 +109,7 @@ public class LoanDAO {
             }
             return loanByMemberId;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find loan by member ID", e);
         }
     }
 
@@ -126,7 +127,7 @@ public class LoanDAO {
             }
             return loanByStatus;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find loan by status", e);
         }
     }
 
@@ -142,7 +143,7 @@ public class LoanDAO {
             csBorrowBook.execute();
             return csBorrowBook.getInt(3);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to execute borrow book procedure", e);
         }
     }
 
@@ -157,7 +158,7 @@ public class LoanDAO {
             csReturnBook.execute();
             return csReturnBook.getInt(2);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to execute return book procedure", e);
         }
     }
 
@@ -169,7 +170,7 @@ public class LoanDAO {
             csCalculateFine.setInt(1, loanId);
             csCalculateFine.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to execute calculate fine procedure", e);
         }
     }
 
@@ -197,7 +198,7 @@ public class LoanDAO {
             }
             return memberLoanHistory;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to execute get member loan history procedure", e);
         }
     }
 
@@ -212,7 +213,7 @@ public class LoanDAO {
 
             return psUpdateLoan.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update loan status", e);
         }
     }
 

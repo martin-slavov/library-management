@@ -1,6 +1,7 @@
 package com.github.martinslavov.dao;
 
 import com.github.martinslavov.config.DatabaseConnection;
+import com.github.martinslavov.exception.DatabaseException;
 import com.github.martinslavov.model.Fine;
 import com.github.martinslavov.model.enums.FineStatus;
 
@@ -29,7 +30,7 @@ public class FineDAO {
             }
             return Optional.of(fine);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to save fine", e);
         }
     }
 
@@ -46,7 +47,7 @@ public class FineDAO {
             }
             return allFines;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to retrieve all fines", e);
         }
     }
 
@@ -64,7 +65,7 @@ public class FineDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find fine by ID", e);
         }
     }
 
@@ -82,7 +83,7 @@ public class FineDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find fine by loan ID", e);
         }
     }
 
@@ -101,7 +102,7 @@ public class FineDAO {
             }
             return finesByStatus;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find fine by status", e);
         }
     }
 
@@ -118,7 +119,7 @@ public class FineDAO {
 
             return psUpdateFine.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update fine", e);
         }
     }
 
@@ -131,7 +132,7 @@ public class FineDAO {
             psDeleteFine.setInt(1, id);
             return psDeleteFine.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to delete fine", e);
         }
     }
 

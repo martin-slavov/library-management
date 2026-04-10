@@ -1,6 +1,7 @@
 package com.github.martinslavov.dao;
 
 import com.github.martinslavov.config.DatabaseConnection;
+import com.github.martinslavov.exception.DatabaseException;
 import com.github.martinslavov.model.Author;
 
 import java.sql.*;
@@ -30,7 +31,7 @@ public class AuthorDAO {
             return Optional.of(author);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to save author", e);
         }
     }
 
@@ -48,7 +49,7 @@ public class AuthorDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find author by ID", e);
         }
     }
 
@@ -65,7 +66,7 @@ public class AuthorDAO {
             }
             return allAuthors;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to retrieve all authors", e);
         }
     }
 
@@ -83,7 +84,7 @@ public class AuthorDAO {
             }
             return authorByFirstName;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find author by first name", e);
         }
     }
 
@@ -101,7 +102,7 @@ public class AuthorDAO {
             }
             return authorByLastName;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find author by last name", e);
         }
     }
 
@@ -120,7 +121,7 @@ public class AuthorDAO {
             }
             return authorByFullName;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find author by full name", e);
         }
     }
 
@@ -138,7 +139,7 @@ public class AuthorDAO {
             }
             return authorByNationality;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find author by nationality", e);
         }
     }
 
@@ -155,7 +156,7 @@ public class AuthorDAO {
 
             return psUpdateAuthor.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update author", e);
         }
     }
 
@@ -168,7 +169,7 @@ public class AuthorDAO {
             psDeleteAuthor.setInt(1, id);
             return psDeleteAuthor.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to delete author", e);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.github.martinslavov.dao;
 
 import com.github.martinslavov.config.DatabaseConnection;
+import com.github.martinslavov.exception.DatabaseException;
 import com.github.martinslavov.model.Member;
 import com.github.martinslavov.model.enums.MemberStatus;
 
@@ -39,7 +40,7 @@ public class MemberDAO {
 
             return Optional.of(member);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to save member", e);
         }
     }
 
@@ -56,7 +57,7 @@ public class MemberDAO {
             }
             return allMembers;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to retrieve all members", e);
         }
     }
 
@@ -74,7 +75,7 @@ public class MemberDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find member by ID", e);
         }
     }
 
@@ -92,7 +93,7 @@ public class MemberDAO {
             }
             return membersByFirstName;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find member by first name", e);
         }
     }
 
@@ -110,7 +111,7 @@ public class MemberDAO {
             }
             return membersByLastName;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find member by last name", e);
         }
     }
 
@@ -127,7 +128,7 @@ public class MemberDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find member by phone", e);
         }
     }
 
@@ -144,7 +145,7 @@ public class MemberDAO {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find member by email", e);
         }
     }
 
@@ -162,7 +163,7 @@ public class MemberDAO {
             }
             return membersByStatus;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to find member by status", e);
         }
     }
 
@@ -187,7 +188,7 @@ public class MemberDAO {
 
             return psUpdateMember.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to update member", e);
         }
     }
 
@@ -200,7 +201,7 @@ public class MemberDAO {
             psDeleteMember.setInt(1, id);
             return psDeleteMember.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to delete member", e);
         }
     }
 
