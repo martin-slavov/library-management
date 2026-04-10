@@ -127,6 +127,24 @@ public class BookDAO {
         }
     }
 
+    public List<Book> findByCategoryId(int categoryId) {
+
+        String sql = "SELECT * FROM books WHERE category_id = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement psFindByCategoryId = conn.prepareStatement(sql)
+        ) {
+            psFindByCategoryId.setInt(1, categoryId);
+            ResultSet rs = psFindByCategoryId.executeQuery();
+            List<Book> bookByCategoryId = new ArrayList<>();
+            while (rs.next()) {
+                bookByCategoryId.add(mapResultSetToBook(rs));
+            }
+            return bookByCategoryId;
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to find book by category ID", e);
+        }
+    }
+
     public boolean update(Book book) {
 
         String sql = """
