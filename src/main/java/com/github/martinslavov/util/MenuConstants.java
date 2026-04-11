@@ -37,6 +37,16 @@ public class MenuConstants {
             
             Enter your choice:\s
             """;
+    public static final String BOOKS_UPDATE_MENU = """
+            === Update Book (ISBN: %s) ===
+            1. Update title
+            2. Update author
+            3. Update category
+            4. Add copies
+            0. Back
+            
+            Enter your choice:\s
+            """;
 
     public static final String MEMBER_MENU = """
             === Members ===
