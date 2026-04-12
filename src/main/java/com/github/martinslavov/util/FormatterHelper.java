@@ -46,4 +46,11 @@ public class FormatterHelper {
                 author.getLastName(),
                 author.getNationality() != null ? author.getNationality() : "Unknown");
     }
+
+    public String formatCategory(Category category) {
+        return String.format("ID: %d | %s | %s",
+                category.getCategoryId(),
+                category.getName(),
+                category.getDescription());
+    }
 }
