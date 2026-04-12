@@ -76,7 +76,7 @@ VALUES ('Science Fiction', 'Speculative fiction involving futuristic concepts.')
 
 INSERT INTO Books (ISBN, title, author_id, category_id, publication_date, total_copies, available_copies) 
 VALUES ('978-0441172719', 'Dune', 1, 1, 1965, 3, 3),
-       ('978-0575082441', 'The Witcher: The Last Wish', 2, 2, 1993, 2, 2),
+       ('978-0575082441', 'The Witcher: The Last Wish', 2, 2, 1993, 2, 1),
        ('978-0451524935', '1984', 3, 3, 1949, 5, 5);
 
 INSERT INTO Members (first_name, last_name, phone, email, start_date, expire_date, status) 
