@@ -74,4 +74,26 @@ public class FormatterHelper {
 
     }
 
+    public String formatFine(Fine fine) {
+        var loan = context.loanDAO.findById(fine.getLoanId());
+        if (loan.isEmpty()) {
+            return String.format("Fine ID: %d | Loan not found | Amount: %s | Status: %s",
+                    fine.getFineId(), fine.getAmount(), fine.getStatus().name());
+        }
+
+        String bookTitle = context.bookDAO.findById(loan.get().getBookId())
+                .map(Book::getTitle)
+                .orElse("Unknown");
+
+        String memberName = context.memberDAO.findById(loan.get().getMemberId())
+                .map(m -> m.getFirstName() + " " + m.getLastName())
+                .orElse("Unknown");
+
+        return String.format("ID: %d | %s | %s | Amount: %s | Status: %s",
+                fine.getFineId(),
+                memberName,
+                bookTitle,
+                fine.getAmount(),
+                fine.getStatus().name());
+    }
 }
