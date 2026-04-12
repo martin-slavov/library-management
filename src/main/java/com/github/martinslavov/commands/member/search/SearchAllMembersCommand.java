@@ -16,6 +16,7 @@ public class SearchAllMembersCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("=== All Members ===");
         List<Member> members = context.memberDAO.findAll();
         if (members.isEmpty()) {
             System.out.println("No members found.");

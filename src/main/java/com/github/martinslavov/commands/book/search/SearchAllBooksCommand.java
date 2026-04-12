@@ -16,6 +16,7 @@ public class SearchAllBooksCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("=== All Books ===");
         List<Book> books = context.bookDAO.findAll();
         if (books.isEmpty()) {
             System.out.println("No books found.");

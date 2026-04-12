@@ -1,5 +1,6 @@
 package com.github.martinslavov.util;
 
+import com.github.martinslavov.model.Author;
 import com.github.martinslavov.model.Book;
 import com.github.martinslavov.model.Category;
 import com.github.martinslavov.model.Member;
@@ -36,5 +37,13 @@ public class FormatterHelper {
                 member.getStartDate(),
                 member.getExpireDate(),
                 member.getStatus());
+    }
+
+    public String formatAuthor(Author author) {
+        return String.format("ID: %d | %s %s | %s",
+                author.getAuthorId(),
+                author.getFirstName(),
+                author.getLastName(),
+                author.getNationality() != null ? author.getNationality() : "Unknown");
     }
 }
