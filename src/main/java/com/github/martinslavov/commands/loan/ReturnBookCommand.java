@@ -6,6 +6,7 @@ import com.github.martinslavov.model.Loan;
 import com.github.martinslavov.model.Member;
 import com.github.martinslavov.model.enums.LoanStatus;
 import com.github.martinslavov.util.AppContext;
+import com.github.martinslavov.util.FormatterHelper;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ReturnBookCommand implements Command {
                 System.out.printf("%d. %s | Due: %s | Status: %s%n",
                         i + 1,
                         book.get().getTitle(),
-                        activeLoans.get(i).getEndDate(),
+                        activeLoans.get(i).getEndDate().format(FormatterHelper.DATE_FORMAT),
                         activeLoans.get(i).getStatus().name());
             }
 
