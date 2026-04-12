@@ -8,15 +8,12 @@ import com.github.martinslavov.model.Loan;
 import com.github.martinslavov.model.Member;
 import com.github.martinslavov.model.enums.FineStatus;
 import com.github.martinslavov.model.enums.MemberStatus;
+import com.github.martinslavov.util.ValidationHelper;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class MemberService {
-
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-z0-9+_.-]+@[a-z0-9.-]+\\.[a-z]{2,}$");
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+?[0-9\\s-]{7,14}$");
 
     private final MemberDAO memberDAO;
     private final FineDAO fineDAO;
@@ -30,14 +27,14 @@ public class MemberService {
 
     public void registerMember(Member member) {
 
-        if (!EMAIL_PATTERN.matcher(member.getEmail()).matches()) {
+        if (!ValidationHelper.isValidEmail(member.getEmail())) {
             throw new LibraryException("Invalid email format");
         }
 
         if (member.getPhone() != null) {
             String cleanPhone = member.getPhone().replaceAll("[\\s-]", "");
             member.setPhone(cleanPhone);
-            if (!PHONE_PATTERN.matcher(member.getPhone().replaceAll("[\\s-]", "")).matches()) {
+            if (!ValidationHelper.isValidPhone(cleanPhone)) {
                 throw new LibraryException("Invalid phone format");
             }
         }

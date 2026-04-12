@@ -1,5 +1,7 @@
 package com.github.martinslavov.util;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class InputHelper {
@@ -29,5 +31,16 @@ public class InputHelper {
     public boolean readConfirmation(String prompt) {
         System.out.print(prompt + " (yes/no): ");
         return scanner.nextLine().trim().equalsIgnoreCase("yes");
+    }
+
+    public LocalDate readDate(String prompt) {
+        while (true) {
+            String input = readString(prompt + " (YYYY-MM-DD): ");
+            try {
+                return LocalDate.parse(input);
+            } catch (DateTimeParseException e) {
+                System.err.println("Invalid date format — please use YYYY-MM-DD");
+            }
+        }
     }
 }
