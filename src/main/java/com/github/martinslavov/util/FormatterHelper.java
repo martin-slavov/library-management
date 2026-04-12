@@ -1,11 +1,12 @@
 package com.github.martinslavov.util;
 
-import com.github.martinslavov.model.Author;
-import com.github.martinslavov.model.Book;
-import com.github.martinslavov.model.Category;
-import com.github.martinslavov.model.Member;
+import com.github.martinslavov.model.*;
+
+import java.time.format.DateTimeFormatter;
 
 public class FormatterHelper {
+
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
     private final AppContext context;
 
@@ -34,8 +35,8 @@ public class FormatterHelper {
                 member.getLastName(),
                 member.getEmail(),
                 member.getPhone() != null ? member.getPhone() : "No phone",
-                member.getStartDate(),
-                member.getExpireDate(),
+                member.getStartDate().format(DATE_FORMAT),
+                member.getExpireDate().format(DATE_FORMAT),
                 member.getStatus());
     }
 
@@ -53,4 +54,24 @@ public class FormatterHelper {
                 category.getName(),
                 category.getDescription());
     }
+
+    public String formatLoan(Loan loan) {
+        String bookTitle = context.bookDAO.findById(loan.getBookId())
+                .map(Book::getTitle)
+                .orElse("Unknown");
+
+        String memberName = context.memberDAO.findById(loan.getMemberId())
+                .map(member -> member.getFirstName() + " " + member.getLastName())
+                .orElse("Unknown");
+        return String.format("ID: %d | %s | %s | Start: %s | Due: %s | Returned: %s | Status: %s",
+                loan.getLoanId(),
+                bookTitle,
+                memberName,
+                loan.getStartDate().format(DATE_FORMAT),
+                loan.getEndDate().format(DATE_FORMAT),
+                loan.getReturnDate() != null ? loan.getReturnDate().format(DATE_FORMAT) : "Not returned",
+                loan.getStatus());
+
+    }
+
 }

@@ -174,29 +174,25 @@ public class LoanDAO {
         }
     }
 
-    public List<String> getMemberLoanHistory(int memberId) {
-
+    public List<Loan> getMemberLoanHistory(int memberId) {
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             CallableStatement csGetMemberLoanHistory = conn.prepareCall("{CALL get_member_loan_history(?)}")
-        ) {
-            csGetMemberLoanHistory.setInt(1, memberId);
+             CallableStatement cs = conn.prepareCall("{CALL get_member_loan_history(?)}")) {
 
-            ResultSet rs = csGetMemberLoanHistory.executeQuery();
-            List<String> memberLoanHistory = new ArrayList<>();
+            cs.setInt(1, memberId);
+            ResultSet rs = cs.executeQuery();
+            List<Loan> loans = new ArrayList<>();
             while (rs.next()) {
-                memberLoanHistory.add(
-                        rs.getInt(1) + " / " +
-                                rs.getString(2) + " / " +
-                                rs.getString(3) + " / " +
-                                rs.getDate(4) + " / " +
-                                rs.getDate(5) + " / " +
-                                rs.getDate(6) + " / " +
-                                rs.getString(7) + " / " +
-                                rs.getDouble(8) + " / " +
-                                rs.getString(9)
-                );
+                loans.add(new Loan(
+                        rs.getInt("loan_id"),
+                        rs.getInt("book_id"),
+                        rs.getInt("member_id"),
+                        rs.getDate("start_date").toLocalDate(),
+                        rs.getDate("end_date").toLocalDate(),
+                        rs.getDate("return_date") != null ? rs.getDate("return_date").toLocalDate() : null,
+                        LoanStatus.valueOf(rs.getString("loan_status"))
+                ));
             }
-            return memberLoanHistory;
+            return loans;
         } catch (SQLException e) {
             throw new DatabaseException("Failed to execute get member loan history procedure", e);
         }
