@@ -87,11 +87,6 @@ public class MemberService {
         memberDAO.update(member);
     }
 
-    public boolean isMembershipValid(Member member) {
-        return member.getStatus() == MemberStatus.ACTIVE
-                && !member.getExpireDate().isBefore(LocalDate.now());
-    }
-
     private void validateMemberExists(Member member) {
         if (memberDAO.findById(member.getMemberId()).isEmpty()) {
             throw new LibraryException("Member not found");

@@ -11,7 +11,7 @@ public class Member {
     private String lastName;
     private String phone;
     private String email;
-    private LocalDate startDate;
+    private final LocalDate startDate;
     private LocalDate expireDate;
     private MemberStatus status;
 
@@ -76,10 +76,6 @@ public class Member {
 
     public LocalDate getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
     }
 
     public LocalDate getExpireDate() {

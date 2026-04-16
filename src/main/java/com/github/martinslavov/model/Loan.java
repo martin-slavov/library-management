@@ -7,11 +7,11 @@ import java.time.LocalDate;
 public class Loan {
 
     private int loanId;
-    private int bookId;
-    private int memberId;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalDate returnDate;
+    private final int bookId;
+    private final int memberId;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final LocalDate returnDate;
     private LoanStatus status;
 
     public Loan(int loanId, int bookId, int memberId, LocalDate startDate, LocalDate endDate, LocalDate returnDate, LoanStatus status) {
@@ -44,40 +44,20 @@ public class Loan {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
     public int getMemberId() {
         return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
     }
 
     public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public LocalDate getReturnDate() {
         return returnDate;
-    }
-
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
     }
 
     public LoanStatus getStatus() {

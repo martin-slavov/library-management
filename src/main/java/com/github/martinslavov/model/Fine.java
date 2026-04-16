@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 public class Fine {
 
     private int fineId;
-    private int loanId;
-    private BigDecimal amount;
+    private final int loanId;
+    private final BigDecimal amount;
     private FineStatus status;
 
     public Fine(int fineId, int loanId, BigDecimal  amount, FineStatus status) {
@@ -34,16 +34,8 @@ public class Fine {
         return loanId;
     }
 
-    public void setLoanId(int loanId) {
-        this.loanId = loanId;
-    }
-
     public BigDecimal  getAmount() {
         return amount;
-    }
-
-    public void setAmount(BigDecimal  amount) {
-        this.amount = amount;
     }
 
     public FineStatus getStatus() {

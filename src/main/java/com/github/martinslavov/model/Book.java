@@ -7,7 +7,7 @@ public class Book {
     private String title;
     private int authorId;
     private int categoryId;
-    private int publicationDate;
+    private final int publicationDate;
     private int totalCopies;
     private int availableCopies;
 
@@ -68,10 +68,6 @@ public class Book {
 
     public int getPublicationDate() {
         return publicationDate;
-    }
-
-    public void setPublicationDate(int publicationDate) {
-        this.publicationDate = publicationDate;
     }
 
     public int getTotalCopies() {

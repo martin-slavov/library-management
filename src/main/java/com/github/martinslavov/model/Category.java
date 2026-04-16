@@ -4,7 +4,7 @@ public class Category {
 
     private int categoryId;
     private String name;
-    private String description;
+    private final String description;
 
     public Category(int categoryId, String name, String description) {
         this.categoryId = categoryId;
@@ -34,10 +34,6 @@ public class Category {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     @Override

@@ -182,21 +182,6 @@ public class BookDAO {
         }
     }
 
-    public boolean updateAvailableCopies(int bookId, int delta) {
-
-        String sql = "UPDATE books SET available_copies = available_copies + ? WHERE book_id = ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement psUpdateBook = conn.prepareStatement(sql)
-        ) {
-            psUpdateBook.setInt(1, delta);
-            psUpdateBook.setInt(2, bookId);
-
-            return psUpdateBook.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DatabaseException("Failed to update available copies", e);
-        }
-    }
-
     private Book mapResultSetToBook(ResultSet rs) throws SQLException {
         return new Book(
                 rs.getInt("book_id"),

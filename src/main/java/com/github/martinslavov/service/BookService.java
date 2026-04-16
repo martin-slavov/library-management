@@ -61,21 +61,4 @@ public class BookService {
 
         bookDAO.delete(book.getBookId());
     }
-
-    public void updateAvailableCopies(Book book, int delta) {
-
-        if (bookDAO.findById(book.getBookId()).isEmpty()) {
-            throw new LibraryException("Book not found");
-        }
-
-        if (book.getAvailableCopies() + delta < 0) {
-            throw new LibraryException("Cannot borrow — no copies available");
-        }
-
-        if (book.getAvailableCopies() + delta > book.getTotalCopies()) {
-            throw new LibraryException("Cannot return — available copies would exceed total copies");
-        }
-
-        bookDAO.updateAvailableCopies(book.getBookId(), delta);
-    }
 }
